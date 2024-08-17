@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'profiles',
     'wifi_locations',
+    'comments',
 ]
 
 MIDDLEWARE = [
