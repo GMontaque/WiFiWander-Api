@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('', include('wifi_locations.urls')),
     path('', include('comments.urls')),
+    path('', include('possibles.urls')),
 ]
