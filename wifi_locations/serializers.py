@@ -7,7 +7,7 @@ class LocationsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WifiLocation
-        fields = ['name','address','description','star_rating','amenities','added_by']
+        fields = ['name','address','image','description','amenities','added_by']
 
 class AddressSerializer(serializers.ModelSerializer):
 

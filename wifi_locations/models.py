@@ -10,10 +10,10 @@ class Address(models.Model):
 
 # Create your models here.
 class WifiLocation(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=50, blank=False, unique=True)
+    address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True, unique=True)
+    image = models.ImageField(upload_to='images/', default='../default_profile_q35ywj',null=True)
     description = models.TextField()
-    star_rating = models.IntegerField()
     amenities = models.CharField(max_length=50, blank=False)
     added_by = models.ForeignKey(User, related_name='wifi_location', null=True, on_delete=models.SET_NULL)
     created_at = models.DateTimeField(auto_now_add=True)
