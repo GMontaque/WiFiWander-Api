@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     memorable_word = models.CharField(max_length=100, blank=True)
-    image = models.ImageField(upload_to='images/', default='../default_profile_q35ywj')
+    image = models.ImageField(upload_to='images/', default='default_profile_q35ywj')
     date_joined = models.DateTimeField(auto_now_add=True)
 
     class Meta:
