@@ -6,7 +6,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comments
-        fields = ['user', 'comment_text', 'created_at']
+        fields = ['user', 'comment_text','star_rating', 'created_at']
 
         # should wifi location be included even though it is not used
         '''
