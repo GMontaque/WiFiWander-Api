@@ -63,7 +63,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['8000-gmontaque-wifiwanderapi-3n84qeqoapp.ws.codeinstitute-ide.net','localhost','https://wifi-wander-api-835560a3f6c2.herokuapp.com']
+ALLOWED_HOSTS = ['8000-gmontaque-wifiwanderapi-3n84qeqoapp.ws.codeinstitute-ide.net','localhost','wifi-wander-api-835560a3f6c2.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-gmontaque-wifiwanderapi-3n84qeqoapp.ws.codeinstitute-ide.net',
