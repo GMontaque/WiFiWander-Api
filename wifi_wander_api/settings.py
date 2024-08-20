@@ -100,7 +100,7 @@ INSTALLED_APPS = [
     'profiles',
     'wifi_locations',
     'comments',
-    'possibles',
+    'favourites',
 ]
 
 SITE_ID = 1
