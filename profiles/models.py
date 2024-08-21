@@ -6,10 +6,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     memorable_word = models.CharField(max_length=100, blank=True)
     image = models.ImageField(upload_to='images/', default='default_profile_q35ywj')
-    date_joined = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-date_joined']
+        ordering = ['user__username']
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
