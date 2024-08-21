@@ -6,7 +6,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
     memorable_word = serializers.CharField(write_only=True)
-    image = serializers.ImageField(required=False)
+    email = serializers.EmailField()
 
     class Meta:
         model = User
