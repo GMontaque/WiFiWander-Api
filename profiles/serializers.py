@@ -5,7 +5,7 @@ from .models import Profile
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
-    memorable_word = serializers.CharField(write_only=True)
+    memorable_word = serializers.CharField(write_only=True, required=True)
     email = serializers.EmailField()
 
     class Meta:
@@ -14,7 +14,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['password1'] != data['password2']:
-            raise serializers.ValidationError("Passwords do not match.")
+            raise serializers.ValidationError({"password2": "Passwords do not match."})
+
+        if not data.get('memorable_word'):
+            raise serializers.ValidationError({"memorable_word": "This field is required."})
+
         return data
 
     def create(self, validated_data):
@@ -31,15 +35,3 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
 
         return user
-
-class ProfileSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
-    is_owner = serializers.SerializerMethodField()
-
-    def get_is_owner(self, obj):
-        request = self.context.get('request')
-        return request.user == obj.user
-
-    class Meta:
-        model = Profile
-        fields = ['id', 'user', 'memorable_word', 'image', 'is_owner']
