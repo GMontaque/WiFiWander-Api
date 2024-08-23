@@ -17,7 +17,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"password2": "Passwords do not match."})
 
         if not data.get('memorable_word'):
-            raise serializers.ValidationError({"memorable_word": ["This field is required."]})
+            raise serializers.ValidationError({"memorable_word": "This field is required."})
 
         return data
 
