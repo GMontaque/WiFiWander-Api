@@ -131,7 +131,7 @@ else:
     CORS_ALLOWED_ORIGINS = [
         # Specify other trusted origins if needed
         "http://localhost:3000",
-        "https://wifi-wander-74985bea95e7.herokuapp.com/",
+        "https://wifi-wander-74985bea95e7.herokuapp.com",
     ]
 
 CORS_ALLOW_CREDENTIALS = True
