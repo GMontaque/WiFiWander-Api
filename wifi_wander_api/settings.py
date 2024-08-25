@@ -74,6 +74,7 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-gmontaque-wifiwanderapi-3n84qeqoapp.ws.codeinstitute-ide.net',
+    'https://wifi-wander-api-835560a3f6c2.herokuapp.com'
 ]
 
 # Application definition
@@ -167,18 +168,18 @@ WSGI_APPLICATION = 'wifi_wander_api.wsgi.application'
 #     }
 # }
 
-if 'DEV' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-    }
-    print('connected')
+# if 'DEV' in os.environ:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+# else:
+DATABASES = {
+   'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+}
+print('connected')
 
 
 
