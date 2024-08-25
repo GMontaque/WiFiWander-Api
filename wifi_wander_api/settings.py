@@ -51,6 +51,8 @@ JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 JWT_AUTH_SAMESITE = 'None'
 
+ACCOUNT_EMAIL_VERIFICATION = 'None'
+
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'wifi_wander_api.serializers.CurrentUserSerializer'
 }
