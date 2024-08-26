@@ -25,5 +25,5 @@ class AddressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Address
-        fields = ['street','city','country','postcode']
+        fields = ['id','street','city','country','postcode']
 
