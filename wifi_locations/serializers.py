@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import WifiLocation,Address
 
 class LocationsSerializer(serializers.ModelSerializer):
+
     added_by = serializers.ReadOnlyField(source='user.username')
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
@@ -22,7 +23,7 @@ class LocationsSerializer(serializers.ModelSerializer):
         fields = ['name','address','image','description','amenities','added_by','created_at','updated_at']
 
 class AddressSerializer(serializers.ModelSerializer):
-
+    id = serializers.IntegerField(read_only=True)
     class Meta:
         model = Address
         fields = ['id','street','city','country','postcode']
