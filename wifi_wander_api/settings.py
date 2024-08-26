@@ -72,11 +72,13 @@ ALLOWED_HOSTS = [
     'localhost',
     'wifi-wander-api-835560a3f6c2.herokuapp.com',
     '... .herokuapp.com',
+    'http://localhost:3000'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-gmontaque-wifiwanderapi-3n84qeqoapp.ws.codeinstitute-ide.net',
-    'https://wifi-wander-api-835560a3f6c2.herokuapp.com'
+    'https://wifi-wander-api-835560a3f6c2.herokuapp.com',
+    'http://localhost:3000'
 ]
 
 # Application definition
