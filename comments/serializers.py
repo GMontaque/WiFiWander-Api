@@ -5,19 +5,19 @@ from .models import Comments
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
     created_at = serializers.SerializerMethodField()
+    is_owner = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
-        return request.user == obj.owner
+        return request.user == obj.user
 
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
 
     class Meta:
         model = Comments
-        fields = ['user', 'comment_text','star_rating', 'created_at']
+        fields = ['user', 'comment_text', 'star_rating', 'created_at', 'is_owner']
 
-        # should wifi location be included even though it is not used
         '''
         so in the front end code under the comment section the user visiting 
         the site will need to see the name of the user who wrote the comment, 
