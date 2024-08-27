@@ -24,6 +24,7 @@ class WifiLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = WifiLocation
         fields = [
+            'id',
             'name', 
             'street',
             'city',
