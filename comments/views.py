@@ -12,53 +12,53 @@ class CommentList(APIView):
 
     # Handle GET request to list all comments
     def get(self, request):
-        comments = Comments.objects.all()  # Retrieve all comments from the database
+        comments = Comments.objects.all()
         serializer = CommentSerializer(
             comments, many=True, context={'request': request}
-        )  # Serialize the comments into JSON format
-        return Response(serializer.data)  # Return the serialized data in the response
+        )
+        return Response(serializer.data)
     
     # Handle POST request to create a new comment
     def post(self, request):
         serializer = CommentSerializer(data=request.data, context={'request': request})
-        if serializer.is_valid():  # Validate the data
-            serializer.save(user=request.user)  # Save the comment, assigning the current user as the author
-            return Response(serializer.data, status=status.HTTP_201_CREATED)  # Return the created comment data
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # Return errors if the data is invalid
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 # View to handle retrieving, updating, or deleting a specific comment
 class CommentDetail(APIView):
-    permission_classes = [IsOwnerOrReadOnly]  # Restrict access to only allow owners to modify or delete their comments
+    permission_classes = [IsOwnerOrReadOnly]
 
     # Helper method to retrieve the comment by primary key (pk)
     def get_object(self, pk):
         try:
-            comment = Comments.objects.get(pk=pk)  # Attempt to retrieve the comment by its ID
-            self.check_object_permissions(self.request, comment)  # Check if the current user has permission to interact with the comment
+            comment = Comments.objects.get(pk=pk)
+            self.check_object_permissions(self.request, comment)
             return comment
-        except Comments.DoesNotExist:  # If the comment does not exist, raise a 404 error
+        except Comments.DoesNotExist:
             raise Http404
 
     # Handle GET request to retrieve a specific comment
     def get(self, request, pk):
-        comment = self.get_object(pk)  # Get the comment using the helper method
+        comment = self.get_object(pk)
         serializer = CommentSerializer(comment, context={'request': request})
-        return Response(serializer.data)  # Return the serialized comment data
+        return Response(serializer.data)
 
     # Handle PUT request to update a specific comment
     def put(self, request, pk):
-        comment = self.get_object(pk)  # Get the comment using the helper method
+        comment = self.get_object(pk)
         serializer = CommentSerializer(
             comment, data=request.data, context={'request': request}
         )  # Serialize the updated data
-        if serializer.is_valid():  # Validate the data
-            serializer.save()  # Save the updated comment
-            return Response(serializer.data)  # Return the updated comment data
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # Return errors if the data is invalid
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     # Handle DELETE request to delete a specific comment
     def delete(self, request, pk):
-        comment = self.get_object(pk)  # Get the comment using the helper method
-        comment.delete()  # Delete the comment from the database
-        return Response({"msg": "Comment Deleted"}, status=status.HTTP_204_NO_CONTENT)  # Return a success message with no content
+        comment = self.get_object(pk)
+        comment.delete()
+        return Response({"msg": "Comment Deleted"}, status=status.HTTP_204_NO_CONTENT)
