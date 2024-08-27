@@ -1,11 +1,13 @@
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
+from wifi_locations.models import WifiLocation
 from .models import Comments
 
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
     created_at = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
+    wifi_location = serializers.PrimaryKeyRelatedField(queryset=WifiLocation.objects.all())
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -16,7 +18,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comments
-        fields = ['user', 'comment_text', 'star_rating', 'created_at', 'is_owner']
+        fields = ['user', 'comment_text', 'star_rating', 'created_at', 'is_owner', 'wifi_location']
+
 
         '''
         so in the front end code under the comment section the user visiting 
