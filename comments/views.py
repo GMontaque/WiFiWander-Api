@@ -12,7 +12,13 @@ class CommentList(APIView):
 
     # Handle GET request to list all comments
     def get(self, request):
-        comments = Comments.objects.all()
+        wifi_location_id = request.query_params.get('wifi_location', None)
+
+        if wifi_location_id:
+            comments = Comments.objects.filter(wifi_location_id=wifi_location_id)
+        else:
+            comments = Comments.objects.all()
+
         serializer = CommentSerializer(
             comments, many=True, context={'request': request}
         )
@@ -31,7 +37,6 @@ class CommentList(APIView):
 class CommentDetail(APIView):
     permission_classes = [IsOwnerOrReadOnly]
 
-    # Helper method to retrieve the comment by primary key (pk)
     def get_object(self, pk):
         try:
             comment = Comments.objects.get(pk=pk)
@@ -51,7 +56,7 @@ class CommentDetail(APIView):
         comment = self.get_object(pk)
         serializer = CommentSerializer(
             comment, data=request.data, context={'request': request}
-        )  # Serialize the updated data
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
