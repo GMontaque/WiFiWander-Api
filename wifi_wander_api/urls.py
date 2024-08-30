@@ -27,8 +27,8 @@ urlpatterns = [
     path(
         'dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')
     ),
-    path('profiles/', include('profiles.urls')),
-    path('wifi_locations/', include('wifi_locations.urls')),
-    path('comments/', include('comments.urls')),
-    path('favourites/', include('favourites.urls')),
+    path('', include('profiles.urls')),
+    path('', include('wifi_locations.urls')),
+    path('', include('comments.urls')),
+    path('', include('favourites.urls')),
 ]
