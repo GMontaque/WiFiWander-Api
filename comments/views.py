@@ -7,10 +7,11 @@ from .models import Comments
 from .serializers import CommentSerializer
 from wifi_wander_api.permissions import IsOwnerOrReadOnly
 
+
 # View to handle listing all comments and creating new comments
 class CommentList(APIView):
+    permission_classes = [IsAuthenticated]
 
-    # Handle GET request to list all comments
     def get(self, request):
         wifi_location_id = request.query_params.get('wifi_location', None)
 
@@ -23,15 +24,14 @@ class CommentList(APIView):
             comments, many=True, context={'request': request}
         )
         return Response(serializer.data)
-    
-    # Handle POST request to create a new comment
+
     def post(self, request):
         serializer = CommentSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 # View to handle retrieving, updating, or deleting a specific comment
 class CommentDetail(APIView):
