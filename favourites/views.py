@@ -23,6 +23,9 @@ class FavouritesList(APIView):
     def post(self, request):
         serializer = FavouritesSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
+            wifi_location = serializer.validated_data.get('wifi_location')
+            if not wifi_location:
+                return Response({"detail": "WiFi location is required."}, status=status.HTTP_400_BAD_REQUEST)
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
