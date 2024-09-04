@@ -16,10 +16,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data['password1'] != data['password2']:
             raise serializers.ValidationError({"password2": "Passwords do not match."})
-
         if not data.get('memorable_word'):
             raise serializers.ValidationError({"memorable_word": "This field is required."})
-
         return data
 
     def create(self, validated_data):
@@ -28,23 +26,25 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password1']
         )
-
         Profile.objects.create(
             user=user,
             memorable_word=validated_data['memorable_word'],
             image=validated_data.get('image', 'default_profile_q35ywj')
         )
-
         return user
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     is_owner = serializers.SerializerMethodField()
+    is_admin = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context.get('request')
         return request.user == obj.user
 
+    def get_is_admin(self, obj):
+        return obj.user.is_staff
+
     class Meta:
         model = Profile
-        fields = ['id', 'user', 'memorable_word', 'image', 'is_owner']
+        fields = ['id', 'user', 'memorable_word', 'image', 'is_owner', 'is_admin']
