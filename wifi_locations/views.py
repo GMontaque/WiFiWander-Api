@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from .models import WifiLocation
 from .serializers import WifiLocationSerializer
 from wifi_wander_api.permissions import IsOwnerOrReadOnly
+from django.db.models import Q
 
 class LocationList(APIView):
     """
@@ -14,9 +15,23 @@ class LocationList(APIView):
 
     def get(self, request):
         """
-        Return a list of all wifi locations.
+        Return a list of all wifi locations, also includes filter by continent, country, and city.
         """
+        continent = request.query_params.get('continent')
+        country = request.query_params.get('country')
+        city = request.query_params.get('city')
+
+        # all locations
         locations = WifiLocation.objects.all()
+
+        # filter
+        if continent:
+            locations = locations.filter(continent__iexact=continent)
+        if country:
+            locations = locations.filter(country__iexact=country)
+        if city:
+            locations = locations.filter(city__iexact=city)
+
         serializer = WifiLocationSerializer(locations, many=True, context={'request': request})
         return Response(serializer.data)
     
@@ -37,7 +52,7 @@ class Location(APIView):
 
     def get_object(self, pk):
         """
-        Helper method to get the object with given pk.
+        get the object with given pk.
         """
         try:
             location = WifiLocation.objects.get(pk=pk)
