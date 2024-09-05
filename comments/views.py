@@ -3,7 +3,7 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Comments
 from .serializers import CommentSerializer
 from wifi_wander_api.permissions import IsOwnerOrReadOnly
@@ -11,7 +11,12 @@ from wifi_wander_api.permissions import IsOwnerOrReadOnly
 
 # View to handle listing all comments and creating new comments
 class CommentList(APIView):
-    permission_classes = [IsAuthenticated]
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            self.permission_classes = [AllowAny]
+        else:
+            self.permission_classes = [IsAuthenticated]
+        return super(CommentList, self).get_permissions()
 
     def get(self, request):
         wifi_location_id = request.query_params.get('wifi_location', None)
@@ -62,7 +67,7 @@ class CommentDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     # Handle DELETE request to delete a specific comment
     def delete(self, request, pk):
         comment = self.get_object(pk)
