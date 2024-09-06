@@ -130,7 +130,7 @@ if 'CLIENT_ORIGIN' in os.environ:
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://3000-gmontaque-wifiwanderapi-3n84qeqoapp.ws.codeinstitute-ide.net",
+        r"https://3000-gmontaque-wifiwander-7w8halvbant.ws.codeinstitute-ide.net",
         r"^http://localhost:\d+$",
     ]
 
