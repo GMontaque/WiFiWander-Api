@@ -123,22 +123,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if 'CLIENT_ORIGIN_DEV' in os.environ:
-    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
-    CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://.*\.codeinstitute-ide\.net$",
-        r"^http://localhost:\d+$",
-        r"^https://localhost:\d+$",
-    ]
-elif 'CLIENT_ORIGIN' in os.environ:
+if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
         os.environ.get('CLIENT_ORIGIN'),
     ]
-else:
-    CORS_ALLOWED_ORIGINS = [
-        # Specify other trusted origins if needed
-        "http://localhost:3000",
-        "https://wifi-wander-74985bea95e7.herokuapp.com",
+
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        r"^https://3000-gmontaque-wifiwanderapi-3n84qeqoapp.ws.codeinstitute-ide.net",
+        r"^http://localhost:\d+$",
     ]
 
 CORS_ALLOW_CREDENTIALS = True
