@@ -2,6 +2,7 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
 from .models import WifiLocation
 
+
 class WifiLocationSerializer(serializers.ModelSerializer):
     added_by = serializers.ReadOnlyField(source='added_by.username')
     created_at = serializers.SerializerMethodField()
@@ -25,17 +26,17 @@ class WifiLocationSerializer(serializers.ModelSerializer):
         model = WifiLocation
         fields = [
             'id',
-            'name', 
+            'name',
             'street',
             'city',
             'country',
             'postcode',
-            'image', 
-            'description', 
-            'amenities', 
+            'image',
+            'description',
+            'amenities',
             'continent',
-            'added_by', 
-            'created_at', 
+            'added_by',
+            'created_at',
             'updated_at',
             'is_owner'
         ]
