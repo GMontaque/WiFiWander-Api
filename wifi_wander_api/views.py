@@ -5,11 +5,13 @@ from .settings import (
     JWT_AUTH_SECURE,
 )
 
+
 @api_view()
 def root_route(request):
     return Response({
         "message": "Welcome to Wifi Wander API, a digital nomads best friend"
     })
+
 
 @api_view(['POST'])
 def logout_route(request):
