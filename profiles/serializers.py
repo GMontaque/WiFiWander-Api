@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Profile
 
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
@@ -11,13 +12,20 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'memorable_word', 'image']
+        fields = [
+            'username', 'email', 'password1', 'password2',
+            'memorable_word', 'image'
+        ]
 
     def validate(self, data):
         if data['password1'] != data['password2']:
-            raise serializers.ValidationError({"password2": "Passwords do not match."})
+            raise serializers.ValidationError(
+                {"password2": "Passwords do not match."}
+            )
         if not data.get('memorable_word'):
-            raise serializers.ValidationError({"memorable_word": "This field is required."})
+            raise serializers.ValidationError(
+                {"memorable_word": "This field is required."}
+            )
         return data
 
     def create(self, validated_data):
@@ -33,6 +41,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
         return user
 
+
 class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     is_owner = serializers.SerializerMethodField()
@@ -47,4 +56,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['id', 'user', 'memorable_word', 'image', 'is_owner', 'is_admin']
+        fields = [
+            'id', 'user', 'memorable_word', 'image',
+            'is_owner', 'is_admin'
+        ]

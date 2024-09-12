@@ -6,15 +6,20 @@ from .models import Profile
 from .serializers import ProfileSerializer, UserRegistrationSerializer
 from wifi_wander_api.permissions import IsOwnerOrReadOnly
 
+
 class ProfileList(APIView):
     """
     List all profiles.
-    No Create view (post method) as profile creation handled by django signals.
+    No Create view (post method) as profile creation is handled by django
+    signals.
     """
     def get(self, request):
         profiles = Profile.objects.all()
-        serializer = ProfileSerializer(profiles, many=True, context={'request': request})
+        serializer = ProfileSerializer(
+            profiles, many=True, context={'request': request}
+        )
         return Response(serializer.data)
+
 
 class ProfileDetail(APIView):
     serializer_class = ProfileSerializer
@@ -35,11 +40,14 @@ class ProfileDetail(APIView):
 
     def put(self, request, pk):
         profile = self.get_object(pk)
-        serializer = ProfileSerializer(profile, data=request.data, context={'request': request})
+        serializer = ProfileSerializer(
+            profile, data=request.data, context={'request': request}
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserRegistrationView(APIView):
     def post(self, request, *args, **kwargs):
