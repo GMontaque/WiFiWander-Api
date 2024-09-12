@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from wifi_locations.models import WifiLocation
 
+
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     wifi_location = models.ForeignKey(WifiLocation, on_delete=models.CASCADE)

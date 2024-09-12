@@ -3,11 +3,14 @@ from rest_framework import serializers
 from wifi_locations.models import WifiLocation
 from .models import Comments
 
+
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
     created_at = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
-    wifi_location = serializers.PrimaryKeyRelatedField(queryset=WifiLocation.objects.all())
+    wifi_location = serializers.PrimaryKeyRelatedField(
+        queryset=WifiLocation.objects.all()
+    )
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -18,4 +21,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comments
-        fields = ['id', 'user', 'comment_text', 'star_rating', 'created_at', 'is_owner', 'wifi_location']
+        fields = [
+            'id', 'user', 'comment_text', 'star_rating', 'created_at',
+            'is_owner', 'wifi_location'
+        ]

@@ -22,7 +22,9 @@ class CommentList(APIView):
         wifi_location_id = request.query_params.get('wifi_location', None)
 
         if wifi_location_id:
-            comments = Comments.objects.filter(wifi_location_id=wifi_location_id)
+            comments = Comments.objects.filter(
+                wifi_location_id=wifi_location_id
+            )
         else:
             comments = Comments.objects.all()
 
@@ -32,7 +34,9 @@ class CommentList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = CommentSerializer(data=request.data, context={'request': request})
+        serializer = CommentSerializer(
+            data=request.data, context={'request': request}
+        )
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -72,4 +76,6 @@ class CommentDetail(APIView):
     def delete(self, request, pk):
         comment = self.get_object(pk)
         comment.delete()
-        return Response({"msg": "Comment Deleted"}, status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"msg": "Comment Deleted"}, status=status.HTTP_204_NO_CONTENT
+        )
