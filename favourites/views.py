@@ -23,7 +23,6 @@ class FavouritesList(APIView):
         data = request.data
         wifi_location_id = data.get('wifi_location_id')
 
-        # Validate wifi_location_id before proceeding
         if not wifi_location_id:
             return Response({"detail": "WiFi location ID is required."}, status=status.HTTP_400_BAD_REQUEST)
 

@@ -41,12 +41,3 @@ class Favourites(models.Model):
     
     def __str__(self):
         return f'{self.wifi_location.name} has been saved to {self.user.username}\'s favourites places to visit'
-
-    '''
-    •    id (Primary Key, int)
-    •    user_id (Foreign Key to user profile, int)
-    •    wifi_location_id (Foreign Key to wifi location, int)
-    •    added_at (Date, auto-set when added)
-    •    visit_status (Char, e.g., 'Planned', 'Visited')
-    •    notes (Char, optional)
-    '''
