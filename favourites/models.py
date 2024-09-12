@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from wifi_locations.models import WifiLocation
 
+
 class Favourites(models.Model):
     PLANNED = 'Planned'
     VISITED = 'Visited'
@@ -23,7 +24,6 @@ class Favourites(models.Model):
         (HIGH, 'High'),
     ]
 
-    # check if user is required
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     wifi_location = models.ForeignKey(WifiLocation, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
@@ -35,9 +35,11 @@ class Favourites(models.Model):
         default=PLANNED
     )
 
-
     class Meta:
         ordering = ['-added_at']
-    
+
     def __str__(self):
-        return f'{self.wifi_location.name} has been saved to {self.user.username}\'s favourites places to visit'
+        return (
+            f'{self.wifi_location.name} has been saved to '
+            f"{self.user.username}'s favourites places to visit"
+        )

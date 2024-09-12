@@ -7,6 +7,7 @@ from .serializers import FavouritesSerializer
 from wifi_locations.models import WifiLocation
 from django.http import Http404
 
+
 class FavouritesList(APIView):
     """
     List all favourites for the current user or create a new one.
@@ -24,18 +25,25 @@ class FavouritesList(APIView):
         wifi_location_id = data.get('wifi_location_id')
 
         if not wifi_location_id:
-            return Response({"detail": "WiFi location ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "WiFi location ID is required."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         try:
             wifi_location = WifiLocation.objects.get(id=wifi_location_id)
         except WifiLocation.DoesNotExist:
-            return Response({"detail": "WiFi location not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"detail": "WiFi location not found."},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
         serializer = FavouritesSerializer(data=data)
         if serializer.is_valid():
             serializer.save(user=request.user, wifi_location=wifi_location)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class FavouritesDetail(APIView):
     """
@@ -58,4 +66,7 @@ class FavouritesDetail(APIView):
     def delete(self, request, pk):
         favourite = self.get_object(pk)
         favourite.delete()
-        return Response({"msg": "WiFi Location Removed"}, status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"msg": "WiFi Location Removed"},
+            status=status.HTTP_204_NO_CONTENT
+        )
