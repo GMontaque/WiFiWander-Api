@@ -15,7 +15,6 @@ import os
 import dj_database_url
 import re
 
-
 if os.path.exists('env.py'):
     import env
 
@@ -45,6 +44,7 @@ if 'DEV' not in os.environ:
         'rest_framework.renderers.JSONRenderer',
     ]
 
+
 REST_USE_JWT = True
 JWT_AUTH_SECURE = True
 JWT_AUTH_COOKIE = 'my-app-auth'
@@ -54,7 +54,9 @@ JWT_AUTH_SAMESITE = 'None'
 ACCOUNT_EMAIL_VERIFICATION = 'None'
 
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'wifi_wander_api.serializers.CurrentUserSerializer'
+    'USER_DETAILS_SERIALIZER': (
+        'wifi_wander_api.serializers.CurrentUserSerializer'
+    )
 }
 
 # Quick-start development settings - unsuitable for production
@@ -76,16 +78,19 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-gmontaque-wifiwanderapi-3n84qeqoapp.ws.codeinstitute-ide.net',
+    (
+        'https://8000-gmontaque-wifiwanderapi-'
+        '3n84qeqoapp.ws.codeinstitute-ide.net'
+    ),
     'https://wifi-wander-api-835560a3f6c2.herokuapp.com',
-    'http://localhost:3000'
+    'http://localhost:3000',
 ]
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -112,6 +117,7 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -130,7 +136,10 @@ if 'CLIENT_ORIGIN' in os.environ:
 
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"https://3000-gmontaque-wifiwander-7w8halvbant.ws.codeinstitute-ide.net",
+        (
+            r"https://3000-gmontaque-wifiwander-"
+            r"7w8halvbant.ws.codeinstitute-ide.net"
+        ),
         r"^http://localhost:\d+$",
     ]
 
@@ -156,7 +165,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wifi_wander_api.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -169,27 +177,37 @@ if 'DEV' in os.environ:
     }
 else:
     DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
     }
 print('connected')
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'MinimumLengthValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'CommonPasswordValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'NumericPasswordValidator'
+        ),
     },
 ]
 
@@ -215,4 +233,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
