@@ -13,21 +13,21 @@ CONTINENT_CHOICES = [
 
 class WifiLocation(models.Model):
     name = models.CharField(max_length=50, blank=False, unique=True)
-    street = models.CharField(max_length=150, blank=False, default='')
-    city = models.CharField(max_length=150, blank=False, default='')
-    country = models.CharField(max_length=150, blank=False, default='')
-    postcode = models.CharField(max_length=150, blank=False, default='')
+    street = models.CharField(max_length=150, blank=False)
+    city = models.CharField(max_length=150, blank=False)
+    country = models.CharField(max_length=150, blank=False)
+    postcode = models.CharField(max_length=150, blank=False)
     image = models.ImageField(
         upload_to='images/', default='../default_profile_q35ywj', null=True
     )
-    description = models.TextField(blank=False, default='')
-    amenities = models.CharField(max_length=50, blank=False, default='')
+    description = models.TextField(blank=False)
+    amenities = models.CharField(max_length=50, blank=False)
     continent = models.CharField(
-        max_length=50, choices=CONTINENT_CHOICES, blank=False, default=''
+        max_length=50, choices=CONTINENT_CHOICES, blank=False
     )
     added_by = models.ForeignKey(
         User, related_name='wifi_locations', null=True,
-        on_delete=models.SET_NULL, default=''
+        on_delete=models.SET_NULL
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
