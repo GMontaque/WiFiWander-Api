@@ -14,7 +14,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'username', 'email', 'password1', 'password2',
-            'memorable_word', 'image'
+            'memorable_word', 'image', 'is_staff', 'is_superuser'
         ]
 
     def validate(self, data):
