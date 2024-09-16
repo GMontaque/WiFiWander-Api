@@ -8,6 +8,7 @@ from .serializers import WifiLocationSerializer
 from wifi_wander_api.permissions import IsOwnerOrReadOnly
 from django.db.models import Q
 
+
 class LocationList(APIView):
     """
     View to list all wifi locations and create a new wifi location.
@@ -15,7 +16,8 @@ class LocationList(APIView):
 
     def get(self, request):
         """
-        Return a list of all wifi locations, also includes filter by continent, country, and city.
+        Return a list of all wifi locations,
+        also includes filter by continent, country, and city.
         """
         continent = request.query_params.get('continent')
         country = request.query_params.get('country')
@@ -32,18 +34,25 @@ class LocationList(APIView):
         if city:
             locations = locations.filter(city__iexact=city)
 
-        serializer = WifiLocationSerializer(locations, many=True, context={'request': request})
+        serializer = WifiLocationSerializer(
+            locations, many=True, context={'request': request}
+        )
         return Response(serializer.data)
-    
+
     def post(self, request):
         """
         Create a new wifi location.
         """
-        serializer = WifiLocationSerializer(data=request.data, context={'request': request})
+        serializer = WifiLocationSerializer(
+            data=request.data, context={'request': request}
+        )
         if serializer.is_valid():
             serializer.save(added_by=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
+
 
 class Location(APIView):
     """
@@ -52,7 +61,7 @@ class Location(APIView):
 
     def get_object(self, pk):
         """
-        get the object with given pk.
+        Get the object with the given pk.
         """
         try:
             location = WifiLocation.objects.get(pk=pk)
@@ -66,7 +75,9 @@ class Location(APIView):
         Retrieve a wifi location by id.
         """
         location = self.get_object(pk)
-        serializer = WifiLocationSerializer(location, context={'request': request})
+        serializer = WifiLocationSerializer(
+            location, context={'request': request}
+        )
         return Response(serializer.data)
 
     def put(self, request, pk):
@@ -74,16 +85,23 @@ class Location(APIView):
         Update a wifi location by id.
         """
         location = self.get_object(pk)
-        serializer = WifiLocationSerializer(location, data=request.data, context={'request': request})
+        serializer = WifiLocationSerializer(
+            location, data=request.data, context={'request': request}
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )
+
     def delete(self, request, pk):
         """
         Delete a wifi location by id.
         """
         location = self.get_object(pk)
         location.delete()
-        return Response({"msg": "Wifi Location Deleted"}, status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"msg": "Wifi Location Deleted"},
+            status=status.HTTP_204_NO_CONTENT
+        )

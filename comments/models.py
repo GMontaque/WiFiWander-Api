@@ -12,6 +12,6 @@ class Comments(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-    
+
     def __str__(self):
         return f'Comment by {self.user.username} on {self.wifi_location.name}'
