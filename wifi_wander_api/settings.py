@@ -55,7 +55,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'None'
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': (
-        'wifi_wander_api.serializers.CurrentUserSerializer'
+        'profiles.serializers.UserDetailSerializer'
     )
 }
 
