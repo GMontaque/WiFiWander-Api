@@ -14,7 +14,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'username', 'email', 'password1', 'password2',
-            'memorable_word', 'image', 'is_staff', 'is_superuser'
+            'memorable_word', 'image'
         ]
 
     def validate(self, data):
@@ -46,7 +46,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
     is_owner = serializers.SerializerMethodField()
     is_admin = serializers.SerializerMethodField()
-    is_superuser = serializers.SerializerMethodField()
+    is_superuser = serializers.ReadOnlyField(source='user.is_superuser')
+    is_staff = serializers.ReadOnlyField(source='user.is_staff')
 
     def get_is_owner(self, obj):
         request = self.context.get('request')
@@ -55,12 +56,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_is_admin(self, obj):
         return obj.user.is_staff
 
-    def get_is_superuser(self, obj):
-        return obj.user.is_superuser
-
     class Meta:
         model = Profile
         fields = [
             'id', 'user', 'memorable_word', 'image',
-            'is_owner', 'is_admin', 'is_superuser'
+            'is_owner', 'is_admin', 'is_superuser', 'is_staff'
         ]
