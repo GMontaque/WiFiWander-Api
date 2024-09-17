@@ -41,13 +41,18 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
         return user
 
+
 class UserDetailSerializer(serializers.ModelSerializer):
     is_staff = serializers.ReadOnlyField()
     is_superuser = serializers.ReadOnlyField()
 
     class Meta:
         model = User
-        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_superuser']
+        fields = [
+            'pk', 'username', 'email', 'first_name',
+            'last_name', 'is_staff', 'is_superuser'
+        ]
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
